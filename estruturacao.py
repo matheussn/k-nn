@@ -4,7 +4,7 @@ import sys
 def lerArquivo(arquivo):
 	arq = open(arquivo, 'r')
 	test = arq.readlines()
-	test = [ x.replace("\n", "").split(" ") for x in test]
+	test = [x.split() for x in test]
 	del test[0]
 	return test
 
