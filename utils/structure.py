@@ -7,4 +7,5 @@ def structure_data(name_file):
 
 
 def convert_to_number(arr):
-	return [float(x) if arr.index(x) < len(arr) - 1 else int(x) for x in arr]
+	size = len(arr)
+	return [float(x) if arr.index(x) < size - 1 else int(x) for x in arr]
