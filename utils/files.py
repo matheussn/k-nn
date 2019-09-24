@@ -2,4 +2,7 @@
 
 
 def read_file(name):
-    return open(name, mode='r')
+    file = open(name, mode='r')
+    lines = file.readlines()
+    file.close()
+    return lines
