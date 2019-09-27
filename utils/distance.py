@@ -11,10 +11,7 @@ def sum_lists(first, second):
 	
 	
 def calc_distance(point, point_list):
-	size = len(point)
-	return [(euclidean_distance(point, point2),point2[size-1]) for point2 in point_list]
-	
-	
-	
-
+	size_point = len(point) - 1
+	point1 = point[0:size_point]
+	return [(euclidean_distance(point1, point2[0:size_point]),point2[size_point]) for point2 in point_list]
 	
