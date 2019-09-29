@@ -4,16 +4,24 @@ import sys
 from accuracy.accuracy import get_accuracy
 from utils.knn import get_classification
 from utils.makeFolds import make_folds
-from utils.structure import structure_data
+from utils.structure import structure_data,calculate_zscore
 from utils.distance import calc_distance
 
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print("Você precisa informar o arquivo a ser lido!")
+    if len(sys.argv) == 4:
+        print("Você precisa informar o nome do arquivo, quantidade de folds, vizinhos e se quer normalizar os dados!")
         exit(-1)
 
-    k_fold = int(sys.argv[2])
-    k_neighbors = int(sys.argv[3])
+    try:
+        k_fold = int(sys.argv[2])
+        k_neighbors = int(sys.argv[3])
+    except ValueError:
+        print("Valore passados para fols e vizinhos inválidos")
+        exit(-1)
+    
+    if not(sys.argv[4].isalpha and (sys.argv[4] == 'S' or sys.argv[4] == 'N')):
+        print("Dados inválidos para normalização.")
+        exit(-1)
 
     hit = 0
 
@@ -21,6 +29,9 @@ if __name__ == '__main__':
     [quantity, dimension] = data[0]
     del data[0]
     random.shuffle(data)
+
+    if sys.argv[4] == 'S':
+        data = calculate_zscore(data,dimension,quantity)
 
     fold = make_folds(data, k_fold)
     set_fold = set([tuple(x) for x in data])
