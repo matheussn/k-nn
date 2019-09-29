@@ -19,7 +19,7 @@ if __name__ == '__main__':
         print("Valore passados para fols e vizinhos inválidos")
         exit(-1)
     
-    if not(sys.argv[4].isalpha and (sys.argv[4] == 'S' or sys.argv[4] == 'N')):
+    if not(sys.argv[4].upper() == 'S' or sys.argv[4].upper() == 'N'):
         print("Dados inválidos para normalização.")
         exit(-1)
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     del data[0]
     random.shuffle(data)
 
-    if sys.argv[4] == 'S':
+    if sys.argv[4].upper() == 'S':
         data = calculate_zscore(data,dimension,quantity)
 
     fold = make_folds(data, k_fold)
