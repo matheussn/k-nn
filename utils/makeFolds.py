@@ -1,5 +1,4 @@
 
 def make_folds(sampling, k):
-    
-    aux = list(sampling[int(parte*len(sampling)/k):int((parte+1)*len(sampling)/k)] for parte in range(k))
-    return dict(zip(list(range(k)),aux))
+    aux = [sampling[int(part*len(sampling)/k):int((part+1)*len(sampling)/k)] for part in range(k)]
+    return dict(zip(list(range(k)), aux))

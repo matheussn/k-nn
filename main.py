@@ -2,15 +2,18 @@ import random
 import sys
 
 from accuracy.accuracy import get_accuracy
+from utils.distance import calc_distance
 from utils.knn import get_classification
 from utils.makeFolds import make_folds
-from utils.structure import structure_data,calculate_zscore
-from utils.distance import calc_distance
+from utils.structure import structure_data, calculate_z_score
 
 if __name__ == '__main__':
     if len(sys.argv) == 4:
         print("Você precisa informar o nome do arquivo, quantidade de folds, vizinhos e se quer normalizar os dados!")
         exit(-1)
+
+    k_fold = 0
+    k_neighbors = 0
 
     try:
         k_fold = int(sys.argv[2])
@@ -18,8 +21,8 @@ if __name__ == '__main__':
     except ValueError:
         print("Valore passados para fols e vizinhos inválidos")
         exit(-1)
-    
-    if not(sys.argv[4].upper() == 'S' or sys.argv[4].upper() == 'N'):
+
+    if not (sys.argv[4].upper() == 'S' or sys.argv[4].upper() == 'N'):
         print("Dados inválidos para normalização.")
         exit(-1)
 
@@ -28,10 +31,10 @@ if __name__ == '__main__':
     data = structure_data(sys.argv[1])
     [quantity, dimension] = data[0]
     del data[0]
-    #random.shuffle(data)
+    random.shuffle(data)
 
     if sys.argv[4].upper() == 'S':
-        data = calculate_zscore(data,dimension,quantity)
+        data = calculate_z_score(data, dimension, quantity)
 
     fold = make_folds(data, k_fold)
     set_fold = set([tuple(x) for x in data])
@@ -50,7 +53,7 @@ if __name__ == '__main__':
             while True:
                 classification = get_classification(dist, k)
 
-                if classification:
+                if type(classification) is int:
                     break
 
                 k -= 1
@@ -61,5 +64,5 @@ if __name__ == '__main__':
             print(point)
             print(classification)
 
+    print("Acertos: %d" % hit)
     print("Taxa de acerto obtido: %f" % get_accuracy(hit, quantity))
-
