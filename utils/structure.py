@@ -10,10 +10,15 @@ def convert_to_number(arr):
 	return [float(x) if arr.index(x) < size - 1 else int(x) for x in arr]
 
 def calculate_zscore(data,dimension,quantity):
+	aux = []
 	quantity = int(quantity)
-	for x in range(quantity):
-		for y in range(dimension):
-			averenge = statistics.mean(data[x])
-			dp = statistics.stdev(data[x])
-			data[x][y] = (data[x][y] - averenge)/dp
+	for x in range(dimension):
+		columns = list(row[x] for row in data)
+		aux.append(columns)
+
+	for y in range(quantity):
+		for x in range(dimension):
+			averenge = sum(aux[x])/quantity
+			dp = statistics.stdev(aux[x])
+			data[y][x] = (data[y][x] - averenge)/dp
 	return data

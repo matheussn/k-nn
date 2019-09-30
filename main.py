@@ -28,7 +28,7 @@ if __name__ == '__main__':
     data = structure_data(sys.argv[1])
     [quantity, dimension] = data[0]
     del data[0]
-    random.shuffle(data)
+    #random.shuffle(data)
 
     if sys.argv[4].upper() == 'S':
         data = calculate_zscore(data,dimension,quantity)
